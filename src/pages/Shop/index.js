@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from '../../reducers/product/productSlice'
 import { faHeart, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, unstable_HistoryRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { addToCart } from "../../reducers/cart/cartSlice";
+import Loading from "../Loading";
 const cx = classNames.bind(styles)
 function Shop() {
     const dataType = []
@@ -30,10 +31,10 @@ function Shop() {
     }
     const HandleRenderProduct = () => {
         const loop = data.length != 0 ? data : product.data
-
         return (
             <div className={cx('product')}>
                 {
+
                     loop.map((item, index) => {
                         const imgUrl = `img/product/${item.img}`
                         const path = `/shop/${item._id}`
@@ -61,6 +62,8 @@ function Shop() {
         )
 
 
+
+
     }
 
 
@@ -68,7 +71,8 @@ function Shop() {
 
         <div className={cx('wrapper')}>
             <div className={cx('content')}>
-                <HandleRenderProduct />
+                {product.data.length != 0 ? <HandleRenderProduct /> : <Loading />}
+
             </div>
             <Sidebar parentCallback={
                 callbackFunction

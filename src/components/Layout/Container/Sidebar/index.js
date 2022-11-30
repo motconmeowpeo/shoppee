@@ -66,8 +66,8 @@ function Sidebar(props) {
                                     newCheck.push(item.id)
                                 else {
                                     newCheck.splice(currentIndex, 1)
-
                                 }
+
                                 const newData = product.data.filter(product => {
                                     return product.category == item.name
                                 })

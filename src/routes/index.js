@@ -6,6 +6,7 @@ import Cart from "../pages/Cart/Cart";
 import Login from "../pages/Login"
 import ProductDetail from "../pages/ProductDetail";
 import NotFound from "../pages/NotFound";
+import Loading from "../pages/Loading";
 const publicRoutes = [
     {
         path: '/', component: Home
@@ -30,7 +31,7 @@ const publicRoutes = [
         path: '/cart', component: Cart
     },
     {
-        path: '/*', component: NotFound
+        path: '/loading', component: Loading
     }
 ]
 export default publicRoutes

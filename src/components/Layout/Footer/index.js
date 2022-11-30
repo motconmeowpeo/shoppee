@@ -7,6 +7,7 @@ import Banerbot from './Bannerbot'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const cx = classNames.bind(styles)
 function Footer() {
+
     return (
         <div className={cx('footer')}>
             <Banerbot />

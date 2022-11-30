@@ -10,18 +10,19 @@ const cartSlice = createSlice({
     },
     reducers: {
         addToCart(state, action) {
-            console.log(action.payload)
-            console.log(action.payload.quanlity)
             const itemIndex = state.cartItem.findIndex((item) => item._id === action.payload._id)
+            const quanlity = parseInt(sessionStorage.getItem('quantity'));
             if (itemIndex >= 0) {
-                if (action.payload.quanlity && action.payload.quanlity > 1)
-                    state.cartItem[itemIndex].cartQuanlity += action.payload.quanlity
+                if (quanlity && quanlity > 1) {
+                    state.cartItem[itemIndex].cartQuanlity += quanlity
+                    sessionStorage.setItem('quantity', 1)
+                }
                 else
                     state.cartItem[itemIndex].cartQuanlity += 1
             }
             else {
 
-                const tempProduct = { ...action.payload, cartQuanlity: 1 }
+                const tempProduct = (quanlity && quanlity > 1) ? { ...action.payload, cartQuanlity: quanlity } : { ...action.payload, cartQuanlity: 1 }
                 state.cartItem.push(tempProduct)
             }
             localStorage.setItem("cartItem", JSON.stringify(state.cartItem))
@@ -29,13 +30,34 @@ const cartSlice = createSlice({
         },
         deleteToCart(state, action) {
             const itemIndex = state.cartItem.findIndex((item) => item._id === action.payload._id)
+
             if (itemIndex >= 0) {
                 state.cartItem.splice(itemIndex, 1)
             }
             localStorage.setItem("cartItem", JSON.stringify(state.cartItem))
 
+        },
+        updateTocart(state, action) {
+            const itemIndex = state.cartItem.findIndex((item) => item._id === action.payload._id)
+            const actionCart = sessionStorage.getItem('action').toString()
+
+            if (itemIndex >= 0) {
+                if (actionCart && actionCart == 'true')
+                    state.cartItem[itemIndex].cartQuanlity += 1
+                if (actionCart && actionCart == 'false') {
+                    if (state.cartItem[itemIndex].cartQuanlity > 0) {
+                        state.cartItem[itemIndex].cartQuanlity -= 1
+                        if (state.cartItem[itemIndex].cartQuanlity == 0)
+                            state.cartItem.splice(itemIndex, 1)
+                    }
+
+                }
+            }
+            localStorage.setItem("cartItem", JSON.stringify(state.cartItem))
+
+
         }
     }
 })
-export const { addToCart, deleteToCart } = cartSlice.actions;
+export const { addToCart, deleteToCart, updateTocart } = cartSlice.actions;
 export default cartSlice.reducer
