@@ -42,16 +42,11 @@ function Login() {
                                     <div className={cx('customer__title')}>Thông tin khách hàng</div>
                                     <div className={cx('customer__email')}>
                                         Email:
-                                        <span>{
-                                            account.data.map(item => {
-                                                if (item.username.toUpperCase() == userNameLogin.toUpperCase())
-                                                    return item.email
-                                            }) || email
-                                        }</span>
+                                        <span>Comming soon.....</span>
                                     </div>
                                     <div className={cx('customer__username')}>
                                         Username:
-                                        <span>{userNameLogin}</span>
+                                        <span>Comming soon.....</span>
                                     </div>
                                     <button onClick={() => {
                                         sessionStorage.setItem('isLogin', false)
