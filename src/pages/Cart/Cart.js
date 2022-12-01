@@ -27,7 +27,6 @@ function Cart() {
                     <li>QUANTITY</li>
                     <li>SUBTOTAL</li>
                 </ul>
-
                 {
                     cart.cartItem.length == 0 ?
                         <div className={cx('cart__empty')}>
@@ -42,7 +41,7 @@ function Cart() {
                                             <img src={require(`../../../public/img/product/${item.img}`)} />
                                         </li>
                                         <li className={cx('cart__name')}>{item.name}</li>
-                                        <li className={cx('cart__price')}>{item.price}</li>
+                                        <li className={cx('cart__price')}>${item.price}.00</li>
                                         <li className={cx('cart__quanlity')}>
                                             <button onClick={() => handleUpdateCart(item, false)}>-</button>
                                             {item.cartQuanlity}
@@ -50,6 +49,51 @@ function Cart() {
                                         </li>
                                         <li className={cx('cart__subtotal')}>${parseInt(item.price) * parseInt(item.cartQuanlity)}.00</li>
                                         <li className={cx('cart__clear')}>
+                                            <span onClick={() => {
+                                                dispatch(deleteToCart(item))
+                                            }}>X</span>
+                                        </li>
+                                    </ul>)
+
+                        })
+                }
+
+            </div>
+            <div className={cx('cart__contentReponsive')}>
+                {
+                    cart.cartItem.length == 0 ?
+                        <div className={cx('cart__empty')}>
+                            <span>Your cart is empty go</span>
+                            <Link to='/shop'>SHOP NOW</Link>
+                        </div>
+                        : cart.cartItem.map(item => {
+                            if (cart.cartItem.length != 0)
+                                return (
+                                    <ul key={item._id} className={cx('cartRepon__item')}>
+                                        <li className={cx('cartRepon__img')}>
+                                            <img src={require(`../../../public/img/product/${item.img}`)} />
+                                            <span className={cx('cart__name')}>{item.name}</span>
+                                        </li>
+                                        <li className={cx('cartRepon__quanlity')}>
+                                            <span>QUANTITY</span>
+                                            <div className={cx('cartRepon__service')} >
+                                                <button onClick={() => handleUpdateCart(item, false)}>-</button>
+                                                {item.cartQuanlity}
+                                                <button onClick={() => handleUpdateCart(item, true)}>+</button>
+                                            </div>
+
+
+                                        </li>
+                                        <li className={cx('cartRepon__price')}>
+                                            <span> PRICE</span>
+                                            <span>${item.price}.00</span>
+                                        </li>
+
+                                        <li className={cx('cartRepon__subtotal')}>
+                                            <span>SUBTOTAL</span>
+                                            <span>${parseInt(item.price) * parseInt(item.cartQuanlity)}.00</span>
+                                        </li>
+                                        <li className={cx('cartRepon__clear')}>
                                             <span onClick={() => {
                                                 dispatch(deleteToCart(item))
                                             }}>X</span>
