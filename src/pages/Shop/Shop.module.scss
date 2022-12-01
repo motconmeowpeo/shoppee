@@ -27,6 +27,38 @@
     /* Firefox */
 }
 
+.showModal {
+    position  : absolute;
+    font-size : 2.6rem;
+    display   : block;
+    right     : 0;
+    top       : -4rem;
+    color     : var(--primary-color);
+    display   : none;
+    cursor    : pointer;
+    display   : none;
+    transition: all 0.3s;
+
+    &:hover {
+        color: black;
+    }
+}
+
+.hideModal {
+    position  : absolute;
+    font-size : 2.6rem;
+    display   : block;
+    left      : -2.3rem;
+    top       : -0.3rem;
+    color     : var(--primary-color);
+    cursor    : pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        color: black;
+    }
+}
+
 .product {
     display  : flex;
     flex-wrap: wrap;
@@ -95,4 +127,86 @@
 
 
 
+}
+
+.side__bar {
+    width    : 30%;
+    max-width: 1200px;
+
+}
+
+.side__bar__modal {
+    width           : 28rem;
+    max-width       : 1200px;
+    height          : 90vh;
+    position        : absolute;
+    right           : 0;
+    top             : -4rem;
+    z-index         : 1001;
+    background-color: white;
+    display         : none;
+    animation       : showCartModal 0.3s ease 1;
+}
+
+@keyframes showCartModal {
+    from {
+        transform: translateX(0);
+    }
+
+    from {
+        transform: translateX(25%);
+    }
+}
+
+@media (max-width:1000px) {
+    .product {
+
+
+        &__item {
+
+            flex      : 0 0 50%;
+            max-width : 50%;
+            min-height: 350px;
+        }
+    }
+
+
+
+
+
+    .side__bar {
+        display: none;
+    }
+
+    .side__bar__modal {
+
+        display: block;
+    }
+}
+
+@media (max-width:1000px) {
+    .content {
+        width: 100%;
+    }
+
+    .side__bar {
+        display: none;
+    }
+
+    .showModal {
+        display: block;
+    }
+}
+
+@media (max-width:500px) {
+    .product {
+
+
+        &__item {
+
+            flex      : 0 0 100%;
+            max-width : 100%;
+            min-height: 450px;
+        }
+    }
 }

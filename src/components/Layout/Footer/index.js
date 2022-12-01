@@ -24,6 +24,7 @@ function Footer() {
                     </li>
 
                 </ul>
+
                 <ul className={cx('footer__list')}>
                     <li className={cx('footer__title')}>Social</li>
                     <li className={cx('footer__item')}>

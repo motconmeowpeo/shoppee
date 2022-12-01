@@ -27,8 +27,8 @@
         padding    : 2rem 0;
 
         &>label {
-            font-size: 1.6rem;
-            min-width: 10rem;
+            font-size   : 1.6rem;
+            margin-right: 1rem;
         }
 
         &>input {
@@ -141,5 +141,33 @@
     to {
         opacity  : 1;
         transform: scale(1);
+    }
+}
+
+@media (max-width:500px) {
+    .login {
+        &__register>span {
+            display: none;
+        }
+
+        &__group>label {
+            display: none;
+        }
+
+
+        &__service>button {
+            min-width: 6rem;
+        }
+
+        &__container {
+            padding: 8rem 0;
+
+        }
+
+        &__register>button {
+            min-width: 6rem;
+
+        }
+
     }
 }

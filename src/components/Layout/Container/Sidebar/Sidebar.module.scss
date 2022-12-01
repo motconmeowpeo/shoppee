@@ -1,6 +1,7 @@
 .sidebar {
-    flex     : 0 0 30%;
-    max-width: 20%;
+    flex     : 0 0 100%;
+    max-width: 100%;
+    padding  : 0 1rem;
 
     &__price {
         margin-top: 5rem;

@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from '../../reducers/product/productSlice'
-import { faHeart, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons'
+import { faSquareCaretRight, faSquareCaretLeft, faHeart, faSearch, faUpload } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { addToCart } from "../../reducers/cart/cartSlice";
@@ -15,7 +15,7 @@ function Shop() {
     const [data, setData] = useState([])
     const dispatch = useDispatch()
     const product = useSelector((state) => state.product)
-
+    const [showSidebar, setShowSidebar] = useState(false)
 
     useEffect(() => {
         dispatch(getProduct())
@@ -71,13 +71,29 @@ function Shop() {
     return (
 
         <div className={cx('wrapper')}>
+
+
             <div className={cx('content')}>
                 {product.data.length != 0 ? <HandleRenderProduct /> : <Loading />}
 
             </div>
-            <Sidebar parentCallback={
-                callbackFunction
-            } />
+            <div className={cx('side__bar')}>
+                <Sidebar parentCallback={
+                    callbackFunction
+                } />
+            </div>
+            <div onClick={() => { setShowSidebar(true) }} className={cx('showModal')}>
+                <FontAwesomeIcon icon={faSquareCaretLeft} />
+            </div>
+
+            <div style={{ display: showSidebar ? "block" : "none" }} className={cx('side__bar__modal')}>
+                <div onClick={() => { setShowSidebar(false) }} className={cx('hideModal')}>
+                    <FontAwesomeIcon icon={faSquareCaretRight} />
+                </div>
+                <Sidebar parentCallback={
+                    callbackFunction
+                } />
+            </div>
         </div>
     );
 }
