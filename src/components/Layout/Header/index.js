@@ -42,7 +42,7 @@ function Header() {
                 </ul>
             </div>
             <div className={cx('header__title')}>
-                <span>SHOPPE</span>
+                <Link to='/'>SHOPPE</Link>
             </div>
             <div className={cx('header__icon')}>
                 <span>
