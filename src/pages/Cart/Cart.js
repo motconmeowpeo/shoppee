@@ -1,8 +1,9 @@
 import styles from './Cart.module.scss'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 import classNames from 'classnames/bind'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteToCart, updateTocart } from '../../reducers/cart/cartSlice';
-import { Fragment, useState } from 'react';
+import { clearCart, deleteToCart, updateTocart } from '../../reducers/cart/cartSlice';
 import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 function Cart() {
@@ -72,11 +73,29 @@ function Cart() {
                             return sum + (parseInt(item.price) * parseInt(item.cartQuanlity))
                         }, 0)
                     }.00</span>
-                    <button>CHECK OUT</button>
+                    <button onClick={() => {
+                        const isLogin = sessionStorage.getItem('isLogin')
+                        if (isLogin && isLogin === 'true') {
+                            dispatch(clearCart())
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Check out success...',
+                                text: '!',
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'You need Login!',
+                            })
+                        }
+
+                    }}>CHECK OUT</button>
                 </div>
 
             </div>
         </div>
-    </div>)
+    </div >)
 }
 export default Cart

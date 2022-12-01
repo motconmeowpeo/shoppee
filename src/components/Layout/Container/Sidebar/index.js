@@ -152,7 +152,7 @@ function Sidebar(props) {
                     color.map((item) => {
                         return (<div key={item.id} onClick={() => {
                             const newData = product.data.filter(product => {
-                                return product.color == item.name
+                                return product.color.toUpperCase() == item.name.toUpperCase()
                             })
                             sendData(newData)
                             setDataColor(newData)

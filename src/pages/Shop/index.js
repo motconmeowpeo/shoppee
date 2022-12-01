@@ -12,9 +12,10 @@ import Loading from "../Loading";
 const cx = classNames.bind(styles)
 function Shop() {
     const dataType = []
+    const [data, setData] = useState([])
     const dispatch = useDispatch()
     const product = useSelector((state) => state.product)
-    const [data, setData] = useState([])
+
 
     useEffect(() => {
         dispatch(getProduct())
