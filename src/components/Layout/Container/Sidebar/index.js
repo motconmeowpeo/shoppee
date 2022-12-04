@@ -43,15 +43,42 @@ function Sidebar(props) {
     const [dataCategory, setDataCategory] = useState([])
     const [dataPrice, setDataPrice] = useState([])
     const [dataColor, setDataColor] = useState([])
-
+    const [valuePrice, setValuePirce] = useState(1)
     const [dataSize, setDataSize] = useState([])
-
-
-
     const sendData = (data) => {
         props.parentCallback(data)
     }
-    const [valuePrice, setValuePirce] = useState(1)
+    const handleCheckedCategory = (item) => {
+        const currentIndex = check.indexOf(item.id)
+        const newCheck = []
+        if (currentIndex === -1)
+            newCheck.push(item.id)
+        else {
+            newCheck.splice(currentIndex, 1)
+        }
+
+        const newData = product.data.filter(product => {
+            return product.category == item.name
+        })
+        sendData(newData)
+        setDataCategory(newData)
+        setCheck(newCheck)
+    }
+    const handleCheckedAll = (item) => {
+        const currentIndex = check.indexOf(item.id)
+        const newCheck = []
+        if (currentIndex === -1)
+            newCheck.push(item.id)
+        else
+            newCheck.splice(currentIndex, 1)
+
+        const newData = product.data.map(product => {
+            return product
+        })
+        sendData(newData)
+        setDataCategory(newData)
+        setCheck(newCheck)
+    }
     const HandleRenderRad = () => {
         return category.map((item, index) => {
             const className = `category__content__${item}`
@@ -59,22 +86,8 @@ function Sidebar(props) {
                 return (
                     <div key={index} className={cx(className)}>
                         <input type='radio' name="type" defaultChecked={check.indexOf(item.id) === -1 ? false : true}
-                            onChange={() => {
-                                const currentIndex = check.indexOf(item.id)
-                                const newCheck = []
-                                if (currentIndex === -1)
-                                    newCheck.push(item.id)
-                                else {
-                                    newCheck.splice(currentIndex, 1)
-                                }
-
-                                const newData = product.data.filter(product => {
-                                    return product.category == item.name
-                                })
-                                sendData(newData)
-                                setDataCategory(newData)
-                                setCheck(newCheck)
-                            }}
+                            onChange={() => handleCheckedCategory(item)
+                            }
                         />
                         <span>{item.name}</span>
                     </div>)
@@ -82,21 +95,9 @@ function Sidebar(props) {
                 return (
                     <div key={index} className={cx(className)}>
                         <input type='radio' name="type" defaultChecked={check.indexOf(item.id) == -1 ? false : true}
-                            onChange={() => {
-                                const currentIndex = check.indexOf(item.id)
-                                const newCheck = []
-                                if (currentIndex === -1)
-                                    newCheck.push(item.id)
-                                else
-                                    newCheck.splice(currentIndex, 1)
+                            onChange={() => handleCheckedAll(item)
 
-                                const newData = product.data.map(product => {
-                                    return product
-                                })
-                                sendData(newData)
-                                setDataCategory(newData)
-                                setCheck(newCheck)
-                            }}
+                            }
                         />
                         <span>{item.name}</span>
                     </div>)

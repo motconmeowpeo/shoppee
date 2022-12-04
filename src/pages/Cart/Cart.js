@@ -14,7 +14,24 @@ function Cart() {
     }
 
     const cart = useSelector(state => state.cart)
-
+    const handleCheckout = () => {
+        const isLogin = sessionStorage.getItem('isLogin')
+        if (isLogin && isLogin === 'true') {
+            dispatch(clearCart())
+            Swal.fire({
+                icon: 'success',
+                title: 'Check out success...',
+                text: '!',
+            })
+        }
+        else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'You need Login!',
+            })
+        }
+    }
     return (<div className={cx('cart')}>
         <div className={cx('cart__title')}>CART</div>
         <div className={cx('cart__container')}>
@@ -117,25 +134,10 @@ function Cart() {
                             return sum + (parseInt(item.price) * parseInt(item.cartQuanlity))
                         }, 0)
                     }.00</span>
-                    <button onClick={() => {
-                        const isLogin = sessionStorage.getItem('isLogin')
-                        if (isLogin && isLogin === 'true') {
-                            dispatch(clearCart())
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Check out success...',
-                                text: '!',
-                            })
-                        }
-                        else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: 'You need Login!',
-                            })
-                        }
+                    <button onClick={handleCheckout
 
-                    }}>CHECK OUT</button>
+
+                    }>CHECK OUT</button>
                 </div>
 
             </div>

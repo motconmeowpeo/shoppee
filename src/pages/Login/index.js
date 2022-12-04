@@ -26,7 +26,89 @@ function Login() {
     useEffect(() => {
         dispatch(getAccount())
     }, [])
+    const handleLogin = () => {
+        if (userNameLogin.length != 0 || passwordLogin.length != 0) {
 
+            if (nameRegex.test(userNameLogin) == false) {
+                setMessage("Username không hợp lệ")
+            }
+            else if (passRegex.test(passwordLogin) == false) {
+                setMessage("Password ít nhất 6 ký tự bao gồm 1 chữ cái viết hoa, 1 số")
+            }
+            else {
+                const temp = account.data.filter(item => {
+
+                    return item.username == userNameLogin && item.password == passwordLogin
+                })
+                if (temp.length != 0) {
+                    sessionStorage.setItem('isLogin', true)
+
+                    setLogin("true")
+                }
+
+                else
+                    setMessage("Tài khoản hoặc mật khẩu không đúng")
+            }
+        }
+        else {
+            setMessage("Vui lòng nhập thông tin")
+        }
+    }
+    const handleRegister = () => {
+        if (email.length != 0 || userNameRegister.length != 0 || passwordRegister.length != 0) {
+            if (emailRegex.test(email) == false) {
+                setMessage("Email không hợp lệ")
+            }
+            else if (nameRegex.test(userNameRegister) == false) {
+                setMessage("Username không hợp lệ")
+            }
+            else if (passRegex.test(passwordRegister) == false) {
+                setMessage("Password ít nhất 6  ký tự bao gồm 1 chữ cái viết hoa, 1 số")
+            }
+            else {
+                const temp = account.data.filter(item => {
+                    return item.username == userNameRegister
+                })
+                if (temp.length != 0) {
+                    setMessage("User name đã tồn tại")
+                }
+                else {
+                    const api = axios.create({ baseURL: 'https://api-shopee-three.vercel.app' })
+                    api.post('/api/customer', {
+                        username: userNameRegister,
+                        email: email,
+                        password: passwordRegister,
+                        block: 1,
+                    })
+
+                        .then(res => {
+                            console.log(res)
+                            setMessage("Đăng ký thành công")
+                            setShowRegister(false)
+                            setMessage("")
+                            setEmail("")
+                            setpasswordRegister("")
+                            setuserNameLogin(userNameRegister)
+                            setLogin("true")
+                            sessionStorage.setItem('isLogin', true)
+
+
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            setShowRegister(false)
+                            setMessage("")
+
+                        })
+
+                }
+            }
+
+        }
+        else {
+            setMessage("Vui lòng nhập thông tin")
+        }
+    }
     return (
 
         <Fragment>
@@ -67,35 +149,7 @@ function Login() {
                                         <input value={passwordLogin} onChange={(e) => setpasswordLogin(e.target.value)} placeholder='Password....' type='password' />
                                     </div>
                                     <div className={cx('login__service')}>
-                                        <button onClick={
-                                            () => {
-                                                if (userNameLogin.length != 0 || passwordLogin.length != 0) {
-
-                                                    if (nameRegex.test(userNameLogin) == false) {
-                                                        setMessage("Username không hợp lệ")
-                                                    }
-                                                    else if (passRegex.test(passwordLogin) == false) {
-                                                        setMessage("Password ít nhất 6 ký tự bao gồm 1 chữ cái viết hoa, 1 số")
-                                                    }
-                                                    else {
-                                                        const temp = account.data.filter(item => {
-                                                            return item.username.toUpperCase() == userNameLogin.toUpperCase() && item.password == passwordLogin
-                                                        })
-                                                        if (temp.length != 0) {
-                                                            sessionStorage.setItem('isLogin', true)
-
-                                                            setLogin("true")
-                                                        }
-
-                                                        else
-                                                            setMessage("Tài khoản hoặc mật khẩu không đúng")
-                                                    }
-                                                }
-                                                else {
-                                                    setMessage("Vui lòng nhập thông tin")
-                                                }
-
-                                            }}>Login</button>
+                                        <button onClick={handleLogin}>Login</button>
                                         <div className={cx('login__register')}>
                                             <span>If you don't have account</span>
                                             <button onClick={() => {
@@ -127,59 +181,7 @@ function Login() {
                                 <input value={passwordRegister} onChange={(e) => setpasswordRegister(e.target.value)} placeholder='Password....' type='password' />
                             </div>
                             <div className={cx('login__service')}>
-                                <button onClick={() => {
-
-                                    if (email.length != 0 || userNameRegister.length != 0 || passwordRegister.length != 0) {
-                                        if (emailRegex.test(email) == false) {
-                                            setMessage("Email không hợp lệ")
-                                        }
-                                        else if (nameRegex.test(userNameRegister) == false) {
-                                            setMessage("Username không hợp lệ")
-                                        }
-                                        else if (passRegex.test(passwordRegister) == false) {
-                                            setMessage("Password ít nhất 6  ký tự bao gồm 1 chữ cái viết hoa, 1 số")
-                                        }
-                                        else {
-                                            const temp = account.data.filter(item => {
-                                                return item.username.toUpperCase() == userNameRegister.toUpperCase()
-                                            })
-                                            if (temp.length != 0) {
-                                                setMessage("User name đã tồn tại")
-                                            }
-                                            else {
-                                                const api = axios.create({ baseURL: 'https://api-shopee-three.vercel.app' })
-                                                api.post('/api/customer', {
-                                                    username: userNameRegister,
-                                                    email: email,
-                                                    password: passwordRegister,
-                                                    block: 1,
-                                                })
-                                                    .then(res => {
-                                                        setMessage("Đăng ký thành công")
-
-                                                        setShowRegister(false)
-                                                        setMessage("")
-                                                        setEmail("")
-                                                        setpasswordRegister("")
-                                                        setuserNameLogin(userNameRegister)
-                                                        setLogin("true")
-                                                        sessionStorage.setItem('isLogin', true)
-
-
-                                                    })
-                                                    .catch(error => {
-                                                        setShowRegister(false)
-                                                        setMessage("")
-
-                                                    })
-                                            }
-                                        }
-
-                                    }
-                                    else {
-                                        setMessage("Vui lòng nhập thông tin")
-                                    }
-                                }}>Register</button>
+                                <button onClick={handleRegister}>Register</button>
                                 <button onClick={() => { setShowRegister(false) }}>Back</button>
                             </div>
                             <span className={cx('register__message')}>{message}</span>
