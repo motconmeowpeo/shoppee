@@ -39,12 +39,8 @@ function Sidebar(props) {
     }, [])
     //State
     const [check, setCheck] = useState([])
-    const [dataResult, setDataResult] = useState([])
-    const [dataCategory, setDataCategory] = useState([])
-    const [dataPrice, setDataPrice] = useState([])
-    const [dataColor, setDataColor] = useState([])
+
     const [valuePrice, setValuePirce] = useState(1)
-    const [dataSize, setDataSize] = useState([])
     const sendData = (data) => {
         props.parentCallback(data)
     }
@@ -61,7 +57,6 @@ function Sidebar(props) {
             return product.category == item.name
         })
         sendData(newData)
-        setDataCategory(newData)
         setCheck(newCheck)
     }
     const handleCheckedAll = (item) => {
@@ -76,7 +71,6 @@ function Sidebar(props) {
             return product
         })
         sendData(newData)
-        setDataCategory(newData)
         setCheck(newCheck)
     }
     const HandleRenderRad = () => {
@@ -139,7 +133,6 @@ function Sidebar(props) {
 
                 )
                 sendData(newData)
-                setDataPrice(newData)
                 setValuePirce(value)
 
 
@@ -156,7 +149,6 @@ function Sidebar(props) {
                                 return product.color.toUpperCase() == item.name.toUpperCase()
                             })
                             sendData(newData)
-                            setDataColor(newData)
                         }}></div>)
                     })
                 }
@@ -173,7 +165,6 @@ function Sidebar(props) {
                                 return product.size.toUpperCase() == item.name
                             })
                             sendData(newData)
-                            setDataSize(newData)
                         }}>{item.name}</div>)
                     })
                 }
