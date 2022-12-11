@@ -44,7 +44,6 @@ function Shop() {
                                 <img src={imgUrl} className={cx('product__img')} />
                                 <div className={cx('product__name')} >{item.name}</div>
                                 <div className={cx('product__price')}>${item.price}.00</div>
-
                             </Link>
                             <div className={cx('product__service')}>
                                 <button onClick={() => handleAddToCart(item)} className={cx('product__button')}>ADD TO CART</button>

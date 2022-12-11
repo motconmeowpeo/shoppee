@@ -63,7 +63,7 @@ function Login() {
                 setMessage("Username không hợp lệ")
             }
             else if (passRegex.test(passwordRegister) == false) {
-                setMessage("Password ít nhất 6  ký tự bao gồm 1 chữ cái viết hoa, 1 số")
+                setMessage("Password ít nhất 6  ký tự bao gồm 1 chữ cái, 1 số")
             }
             else {
                 const temp = account.data.filter(item => {
